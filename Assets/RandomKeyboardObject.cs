@@ -60,7 +60,7 @@ public class RandomKeyboardObject : MonoBehaviour
     int arpIndex = 0;
 
     // For totient and other factoring things:
-    static int maxPrimeNeeded = 1000000;
+    static int maxPrimeNeeded = 100000;
     List<int> totients = Enumerable.Repeat(0, maxPrimeNeeded).ToList();
     List<int> primes = new List<int>();
     Dictionary<int, HashSet<int>> divisors = new Dictionary<int, HashSet<int>>();
@@ -74,9 +74,10 @@ public class RandomKeyboardObject : MonoBehaviour
         // Define the default key list
         defaultKeyList = new List<Button> { cKey, cSharpKey, dKey, dSharpKey, eKey, fKey, fSharpKey, gKey, gSharpKey, aKey, aSharpKey, bKey };
         defaultKeyColours = new List<Color> { whiteKeyColour, blackKeyColour, whiteKeyColour, blackKeyColour, whiteKeyColour, whiteKeyColour, blackKeyColour, whiteKeyColour, blackKeyColour, whiteKeyColour, blackKeyColour, whiteKeyColour };
-
-        // Populate primes and totients
         getPrimes();
+        setKeyboard(12);
+        // Populate primes and totients
+
         
     }
 
@@ -94,14 +95,6 @@ public class RandomKeyboardObject : MonoBehaviour
             }
 
         }
-    }
-
-    void generateChordsNaive()
-    {
-        // So, how is this going to work?
-        // Generate every binary string of length numNotes. Reject the ones that are already in the hashset.
-        HashSet<string> chords = new HashSet<string>();
-        // i from 0 to 2^numNotes, exclusive of the last number.
     }
 
     void createCustomKeyboard()
@@ -366,6 +359,7 @@ public class RandomKeyboardObject : MonoBehaviour
         // First few totients
         totients[0] = 1;
         totients[1] = 1;
+        totients[2] = 1;
 
         // First few factors
         divisors[0] = new HashSet<int> { 1 };
@@ -507,7 +501,7 @@ public class RandomKeyboardObject : MonoBehaviour
             toReturn += colouringChoice[i % numCycles].ToString();
         }
         currentChord = makeLeftHeavy(toReturn, numCycles);
-
+        UnityEngine.Debug.Log("currentChord: " + currentChord);
 
         if (numNotes == 12)
         {
@@ -537,6 +531,7 @@ public class RandomKeyboardObject : MonoBehaviour
                 }
             }
         }
+
     }
 
     string makeLeftHeavy(string inBinString, int numCycles)
